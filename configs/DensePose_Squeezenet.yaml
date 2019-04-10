@@ -9,12 +9,12 @@ SOLVER:
   WEIGHT_DECAY: 0.0001
   LR_POLICY: steps_with_decay
   GAMMA: 0.1
-  WARM_UP_ITERS: 1000
+  WARM_UP_ITERS: 5 #1000
   WARM_UP_FACTOR: 0.1
   # Linear scaling rule:
   # 1 GPU:
   BASE_LR: 0.00025
-  MAX_ITER: 140000
+  MAX_ITER: 10 #140000
   STEPS: [0, 100000, 120000]
 
   # 2 GPUs:
@@ -60,17 +60,19 @@ BODY_UV_RCNN:
   ##
   BODY_UV_IMS: True
 TRAIN:
-  WEIGHTS: "DensePoseData/weights/squeezenetweights72000.pkl"
-  Load_SqueezeNetWeights: False
+#  WEIGHTS: "DensePoseData/weights/squeezenetweights72000.pkl"
+  Load_SqueezeNetWeights: True
   SqueezeNetWeightsFile: "weights/squeeze.pkl"
   DATASETS: ('dense_coco_2014_train','dense_coco_2014_valminusminival')
-  PROPOSAL_FILES: ('DensePoseData/proposals/train_fpn_resnet50.pkl','DensePoseData/proposals/valminusminival_fpn_resnet50.pkl')
+#  PROPOSAL_FILES: ('DensePoseData/proposals/train_fpn_resnet50.pkl','DensePoseData/proposals/valminusminival_fpn_resnet50.pkl')
   SCALES: (640, 672, 704, 736, 768, 800)
   MAX_SIZE: 1333
   IMS_PER_BATCH: 1
   BATCH_SIZE_PER_IM: 512
   SNAPSHOT_ITERS: 5000
-  USE_FLIPPED: True
+  USE_FLIPPED: False
+  AUTO_RESUME: False
+
 
 TEST:
   DATASETS: ('dense_coco_2014_minival',)

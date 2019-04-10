@@ -134,8 +134,14 @@ def save_model_to_weights_file(weights_file, model):
             os.path.abspath(weights_file)))
     blobs = {}
     # Save all parameters
+    logger.info(
+        '\n\n\nModel params= {}\n\n\n\n'.format(
+            os.path.abspath(model.params)))
+
     for param in model.params:
         scoped_name = str(param)
+        logger.info('Saving Blob : {:s}'.format(scoped_name))
+
         unscoped_name = c2_utils.UnscopeName(scoped_name)
         if unscoped_name not in blobs:
             logger.debug(' {:s} -> {:s}'.format(scoped_name, unscoped_name))
@@ -156,6 +162,10 @@ def save_model_to_weights_file(weights_file, model):
                     ' {:s} -> {:s} (preserved)'.format(
                         scoped_name, unscoped_name))
                 blobs[unscoped_name] = workspace.FetchBlob(scoped_name)
+    logger.info(
+        '\n\n\nModel blobs= {}\n\n\n\n'.format(
+            os.path.abspath(blobs.keys())))
+
     cfg_yaml = yaml.dump(cfg)
     save_object(dict(blobs=blobs, cfg=cfg_yaml), weights_file)
 
